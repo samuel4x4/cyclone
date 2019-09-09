@@ -1,4 +1,4 @@
-package com.orange.cyclone.configserver;
+package com.ruby.cyclone.configserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

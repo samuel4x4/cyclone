@@ -1,4 +1,4 @@
-package com.orange.cyclone.configserver.controllers;
+package com.ruby.cyclone.configserver.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

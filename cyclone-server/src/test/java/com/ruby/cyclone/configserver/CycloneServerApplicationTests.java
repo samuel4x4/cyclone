@@ -1,4 +1,4 @@
-package com.orange.cyclone.configserver;
+package com.ruby.cyclone.configserver;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
