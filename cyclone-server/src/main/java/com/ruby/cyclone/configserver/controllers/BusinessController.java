@@ -12,7 +12,6 @@ import java.util.UUID;
 @RequestMapping("cyclone/namespaces/{namespace}/businesses")
 public class BusinessController {
 
-
     private BusinessService businessService;
 
     @Autowired

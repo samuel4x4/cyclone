@@ -1,6 +1,8 @@
 package com.ruby.cyclone.configserver.services;
 
 import com.ruby.cyclone.configserver.models.business.Property;
+import com.ruby.cyclone.configserver.models.http.request.AddNewPropertyRequest;
+import com.ruby.cyclone.configserver.models.http.request.UpdatePropertyRequest;
 import com.ruby.cyclone.configserver.repo.mongo.PropertiesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,5 +22,13 @@ public class PropertiesService {
 
     public Map<String, Map<String, Property>> searchProperties(String namespace, String business, String keyWord) {
         return null;
+    }
+
+    public void addProperty(AddNewPropertyRequest propertyRequest) {
+
+    }
+
+    public void updateProperty(UpdatePropertyRequest propertyRequest) {
+
     }
 }

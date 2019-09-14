@@ -1,12 +1,12 @@
 package com.ruby.cyclone.configserver.controllers;
 
 import com.ruby.cyclone.configserver.models.business.Property;
+import com.ruby.cyclone.configserver.models.http.request.AddNewPropertyRequest;
+import com.ruby.cyclone.configserver.models.http.request.UpdatePropertyRequest;
 import com.ruby.cyclone.configserver.services.PropertiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -14,7 +14,7 @@ import java.util.Map;
 public class PropertiesController {
 
 
-    PropertiesService propertiesService;
+    private PropertiesService propertiesService;
 
 
     @Autowired
@@ -30,4 +30,13 @@ public class PropertiesController {
     }
 
 
+    @PostMapping
+    public void addNewProperty(@RequestBody AddNewPropertyRequest propertyRequest) {
+        propertiesService.addProperty(propertyRequest);
+    }
+
+    @PutMapping
+    public void changeProperty(@RequestBody UpdatePropertyRequest propertyRequest) {
+        propertiesService.updateProperty(propertyRequest);
+    }
 }
