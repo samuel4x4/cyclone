@@ -1,6 +1,5 @@
 package com.ruby.cyclone.configserver.controllers;
 
-import com.ruby.cyclone.configserver.models.http.request.AddPlatformRequest;
 import com.ruby.cyclone.configserver.services.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +19,13 @@ public class BusinessController {
     }
 
     @GetMapping()
-    public List<String> getPlatforms(@PathVariable String namespace) {
-        return businessService.getNamespaces(namespace);
+    public List<String> getBusinesses(@PathVariable String namespace) {
+        return businessService.getBusinesses(namespace);
     }
 
 
     @PostMapping()
-    public String addPlatform(@RequestBody AddPlatformRequest platform) {
+    public String addBusiness(@RequestBody String business) {
         return UUID.randomUUID().toString();
     }
 

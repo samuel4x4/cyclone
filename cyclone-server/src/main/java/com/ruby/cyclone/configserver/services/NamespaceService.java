@@ -1,6 +1,6 @@
 package com.ruby.cyclone.configserver.services;
 
-import com.ruby.cyclone.configserver.models.http.request.AddNamespaceRequest;
+import com.ruby.cyclone.configserver.models.api.request.AddNamespaceRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

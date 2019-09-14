@@ -10,7 +10,7 @@ import static com.ruby.cyclone.configserver.controllers.DummyValues.DUMMY_NS;
 
 @Service
 public class BusinessService {
-    public List<String> getNamespaces(String namespace) {
+    public List<String> getBusinesses(String namespace) {
         if (DUMMY_NS.contains(namespace.toLowerCase())) {
             return DUMMY_BUSINESSES;
         }

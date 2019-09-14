@@ -26,23 +26,25 @@ public class FilesController {
     }
 
     @PostMapping("/files")
-    public String importPropertiesFromFile(@PathVariable String namespace, @PathVariable String business, @RequestParam FileFormat fileFormat, @RequestBody MultipartFile file) {
+    public String importPropertiesFromFile(@PathVariable String namespace,
+                                           @PathVariable String business,
+                                           @RequestParam FileFormat fileFormat,
+                                           @RequestBody MultipartFile file) {
         return this.fileService.importProperties(namespace, business, fileFormat, file);
-    }
-
-    @GetMapping("/files/export")
-    public void exportFiles() {
-
     }
 
 
     @GetMapping("/files/export/{filename}")
-    public void exportFileByName(@PathVariable String filename) {
-
+    public void exportFileByName(@PathVariable String namespace,
+                                 @PathVariable String business,
+                                 @PathVariable String filename) {
+        fileService.exportFile(namespace, business, filename);
     }
 
     @GetMapping("/files/{file}/properties")
-    public Map<String, Object> listProperties(@PathVariable String namespace, @PathVariable String business, @PathVariable String file) {
+    public Map<String, Object> listProperties(@PathVariable String namespace,
+                                              @PathVariable String business,
+                                              @PathVariable String file) {
         return fileService.getPropertiesFromFile(namespace, business, file);
 
     }

@@ -1,4 +1,4 @@
-package com.ruby.cyclone.configserver.models.http.request;
+package com.ruby.cyclone.configserver.models.api.request;
 
 
 import com.ruby.cyclone.configserver.models.constants.PropertyType;
