@@ -1,25 +1,37 @@
 package com.ruby.cyclone.configserver.controllers;
 
 import com.ruby.cyclone.configserver.models.http.request.AddNamespaceRequest;
+import com.ruby.cyclone.configserver.services.NamespaceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static com.ruby.cyclone.configserver.controllers.DummyValues.DUMMY_NS;
 
 @RestController
 @RequestMapping("cyclone/namespaces")
 public class NamespacesController {
 
 
+    private NamespaceService namespaceService;
+
+    @Autowired
+    public NamespacesController(NamespaceService namespaceService) {
+        this.namespaceService = namespaceService;
+    }
+
     @GetMapping
     public List<String> getNamespaces() {
-        return DUMMY_NS;
+        return namespaceService.getNamespaces();
     }
 
     @PostMapping
-    public List<String> addNamespace(@RequestBody AddNamespaceRequest namespaceRequest) {
-        return DUMMY_NS;
+    public String addNamespace(@RequestBody AddNamespaceRequest namespaceRequest) {
+        return namespaceService.addNamespace(namespaceRequest);
+    }
+
+    @DeleteMapping("/{namespace}/archive")
+    public void archive() {
+        namespaceService.archive();
     }
 
 }
