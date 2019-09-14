@@ -1,6 +1,6 @@
 package com.ruby.cyclone.configserver.controllers;
 
-import com.ruby.cyclone.configserver.models.http.AddNamespaceRequest;
+import com.ruby.cyclone.configserver.models.http.request.AddNamespaceRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

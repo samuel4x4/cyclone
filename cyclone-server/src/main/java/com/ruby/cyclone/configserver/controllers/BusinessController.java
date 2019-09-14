@@ -1,6 +1,6 @@
 package com.ruby.cyclone.configserver.controllers;
 
-import com.ruby.cyclone.configserver.models.http.AddPlatformRequest;
+import com.ruby.cyclone.configserver.models.http.request.AddPlatformRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;

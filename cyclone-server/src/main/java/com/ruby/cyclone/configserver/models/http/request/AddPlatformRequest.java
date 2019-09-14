@@ -1,4 +1,4 @@
-package com.ruby.cyclone.configserver.models.http;
+package com.ruby.cyclone.configserver.models.http.request;
 
 import lombok.Data;
 

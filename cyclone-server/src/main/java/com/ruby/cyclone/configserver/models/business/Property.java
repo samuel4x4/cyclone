@@ -1,6 +1,7 @@
 package com.ruby.cyclone.configserver.models.business;
 
 
+import com.ruby.cyclone.configserver.models.constants.PropertyType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class Property {
 
     @Id
     private PropertyId id;
+    private PropertyType propertyType;
     private Object value;
 
 }
