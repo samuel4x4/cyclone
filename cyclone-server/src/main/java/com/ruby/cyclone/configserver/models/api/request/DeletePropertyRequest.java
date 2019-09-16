@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeletePropertyRequest {
-    private String propertyRequest;
+    private String propertyKey;
 }
