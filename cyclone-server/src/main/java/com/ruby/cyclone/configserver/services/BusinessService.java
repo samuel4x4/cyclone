@@ -17,7 +17,7 @@ public class BusinessService {
         return Collections.emptyList();
     }
 
-    public void archive() {
+    public void archive(String business) {
 
     }
 }

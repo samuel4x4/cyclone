@@ -25,13 +25,13 @@ public class BusinessController {
 
 
     @PostMapping()
-    public String addBusiness(@RequestBody String business) {
+    public String addBusiness(@PathVariable String namespace, @RequestBody String business) {
         return UUID.randomUUID().toString();
     }
 
     @DeleteMapping("/{business}/archive")
-    public void archive() {
-        this.businessService.archive();
+    public void archive(@PathVariable String namespace, @PathVariable String business) {
+        this.businessService.archive(business);
     }
 
 }
