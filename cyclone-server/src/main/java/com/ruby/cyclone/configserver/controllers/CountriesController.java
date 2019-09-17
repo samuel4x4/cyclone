@@ -1,6 +1,6 @@
 package com.ruby.cyclone.configserver.controllers;
 
-import com.ruby.cyclone.configserver.services.BusinessService;
+import com.ruby.cyclone.configserver.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,30 +8,29 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("cyclone/namespaces/{namespace}/businesses")
+@RequestMapping("cyclone/namespaces/{namespace}/countries")
 public class CountriesController {
 
-    private BusinessService businessService;
+    private CountryService countryService;
 
     @Autowired
-    public CountriesController(BusinessService businessService) {
-        this.businessService = businessService;
+    public CountriesController(CountryService countryService) {
+        this.countryService = countryService;
     }
 
     @GetMapping()
     public List<String> getBusinesses(@PathVariable String namespace) {
-        return businessService.getBusinesses(namespace);
+        return countryService.getBusinesses(namespace);
     }
 
-
     @PostMapping()
-    public String addBusiness(@PathVariable String namespace, @RequestBody String business) {
+    public String addBusiness(@PathVariable String namespace, @RequestBody String country) {
         return UUID.randomUUID().toString();
     }
 
-    @DeleteMapping("/{business}/archive")
-    public void archive(@PathVariable String namespace, @PathVariable String business) {
-        this.businessService.archive(business);
+    @DeleteMapping("/{country}/archive")
+    public void archive(@PathVariable String namespace, @PathVariable String country) {
+        this.countryService.archive(country);
     }
 
 }

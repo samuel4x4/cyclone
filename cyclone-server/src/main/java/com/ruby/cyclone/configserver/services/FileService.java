@@ -12,8 +12,8 @@ import static com.ruby.cyclone.configserver.controllers.DummyValues.DUMMY_NS;
 //TODO replace with business logic this dummy methods
 public class FileService {
 
-    public List<String> getFiles(String namespace, String business) {
-        if (DUMMY_NS.contains(namespace.toLowerCase()) && DUMMY_NS.contains(business.toLowerCase())) {
+    public List<String> getFiles(String namespace, String country) {
+        if (DUMMY_NS.contains(namespace.toLowerCase()) && DUMMY_NS.contains(country.toLowerCase())) {
             return Arrays.asList("application.properties", "datastore.properties");
         }
         return Collections.emptyList();    }
@@ -30,7 +30,7 @@ public class FileService {
         return props;
     }
 
-    public void exportFile(String namespace, String business, String filename) {
+    public void exportFile(String namespace, String country, String filename) {
 
     }
 }

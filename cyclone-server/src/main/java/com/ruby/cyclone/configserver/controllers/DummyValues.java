@@ -6,6 +6,6 @@ import java.util.List;
 //TODO replaces these values with services
 public interface DummyValues {
     static final List<String> DUMMY_NS = Arrays.asList("test", "qualif", "integration", "prod");
-    static final List<String> DUMMY_BUSINESSES = Arrays.asList("oro", "ofr", "me");
+    static final List<String> DUMMY_COUNTRIES = Arrays.asList("oro", "ofr", "me");
 
 }
