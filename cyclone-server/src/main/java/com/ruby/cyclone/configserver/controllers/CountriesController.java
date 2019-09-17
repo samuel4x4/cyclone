@@ -9,12 +9,12 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("cyclone/namespaces/{namespace}/businesses")
-public class BusinessController {
+public class CountriesController {
 
     private BusinessService businessService;
 
     @Autowired
-    public BusinessController(BusinessService businessService) {
+    public CountriesController(BusinessService businessService) {
         this.businessService = businessService;
     }
 

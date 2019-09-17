@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @Builder
 @EqualsAndHashCode
-@Document(collection = "businesses")
+@Document(collection = "countries")
 public class Country {
 
     @Id
