@@ -17,5 +17,5 @@ public class Namespace {
     @Id
     private String name;
     @DBRef
-    private List<Business> businesses;
+    private List<Country> businesses;
 }

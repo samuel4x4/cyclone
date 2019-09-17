@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode
 @Document(collection = "businesses")
-public class Business {
+public class Country {
 
     @Id
     private String id;

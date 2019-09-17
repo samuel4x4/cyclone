@@ -1,7 +1,6 @@
 package com.ruby.cyclone.configserver.models.api.request;
 
 
-import com.ruby.cyclone.configserver.models.constants.PropertyType;
 import lombok.*;
 
 @Data
@@ -9,10 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
-public class AddNewPropertyRequest {
+public class AddNewPropertyRequest<T> {
     private String key;
-    private String defaultValue;
+    private T defaultValue;
     private String file;
-    private PropertyType type;
     private String description;
 }
