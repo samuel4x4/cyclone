@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("cyclone/namespaces/{namespace}/countries")
+@RequestMapping("/api/namespaces/{namespace}/countries")
 public class CountriesController {
 
     private CountryService countryService;

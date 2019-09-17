@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PropertyId {
 
+    private String key;
     private String namespace;
     private String business;
-    private String key;
     private String file = "application.properties";
 }
 

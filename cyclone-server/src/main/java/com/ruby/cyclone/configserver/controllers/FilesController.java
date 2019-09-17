@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("cyclone/namespaces/{namespace}/countries/{country}")
+@RequestMapping("/api/namespaces/{namespace}/countries/{country}")
 public class FilesController {
 
 

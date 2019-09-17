@@ -9,9 +9,8 @@ import java.util.Map;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
-public class UpdatePropertyRequest {
+public class UpdatePropertyRequest<T> {
     private String key;
-    private Map<PropertyLocation, Object> valuesByLocation;
-
+    private Map<PropertyLocation, T> valuesByLocation;
 }
 
