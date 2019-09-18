@@ -49,7 +49,7 @@ public class FileService {
         Optional<Namespace> namespace = this.namespaceRepository.findById(namespaceId);
         return namespace.flatMap(ns -> {
             List<Country> countries = ns.getCountries();
-            return countries.stream().filter(c -> c.equals(countryId)).findFirst()
+            return countries.stream().filter(c -> c.getId().equals(countryId)).findFirst()
                     .flatMap(c -> {
                         List<String> files = c.getFiles();
                         if (files == null) {

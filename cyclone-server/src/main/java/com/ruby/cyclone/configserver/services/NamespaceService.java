@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,7 +37,9 @@ public class NamespaceService {
             throw new RuntimeException("Namespace already exists");
             //@cimpoeru TODO make your own exception and make controller advice
         }
-        return namespaceRepository.save(Namespace.builder().name(namespace).build()).getName();
+        return namespaceRepository.save(Namespace.builder().name(namespace)
+                .countries(new ArrayList<>())
+                .build()).getName();
     }
 
     @Transactional

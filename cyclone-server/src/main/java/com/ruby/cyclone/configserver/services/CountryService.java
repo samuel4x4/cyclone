@@ -46,6 +46,9 @@ public class CountryService {
         Optional<Namespace> ns = this.namespaceRepository.findById(namespace);
         return ns.map(nsDao -> {
             List<Country> countries = nsDao.getCountries();
+            if (countries == null) {
+                countries = new ArrayList<>();
+            }
             countries.add(new Country(country, new ArrayList<String>()));
             nsDao.setCountries(countries);
             namespaceRepository.save(nsDao);
