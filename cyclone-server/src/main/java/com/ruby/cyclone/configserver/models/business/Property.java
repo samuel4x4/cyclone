@@ -1,6 +1,7 @@
 package com.ruby.cyclone.configserver.models.business;
 
 
+import io.swagger.models.properties.PropertyBuilder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -14,10 +15,11 @@ public class Property<T> {
 
     @Id
     @Indexed
-    private String key;
+    private PropertyId key;
 
     @Indexed
     private T value;
+
 
     private String file;
 

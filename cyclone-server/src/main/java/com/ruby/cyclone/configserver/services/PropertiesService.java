@@ -13,8 +13,7 @@ import java.util.List;
 @Service
 public class PropertiesService {
 
-    PropertiesRepository propertiesRepository;
-
+    private PropertiesRepository propertiesRepository;
 
 
     @Autowired
@@ -29,6 +28,7 @@ public class PropertiesService {
 
     public void addProperty(AddNewPropertyRequest propertyRequest) {
 //        propertiesRepository.save()
+
     }
 
     public void updateProperty(UpdatePropertyRequest propertyRequest) {

@@ -22,4 +22,5 @@ public class Namespace {
     @Id
     private String name;
 
+    private List<Country> countries;
 }

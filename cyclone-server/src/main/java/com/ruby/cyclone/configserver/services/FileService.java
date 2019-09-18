@@ -1,29 +1,37 @@
 package com.ruby.cyclone.configserver.services;
 
 import com.ruby.cyclone.configserver.models.business.Country;
-import com.ruby.cyclone.configserver.models.business.CountryId;
-import com.ruby.cyclone.configserver.models.business.PropertiesFile;
+import com.ruby.cyclone.configserver.models.business.Namespace;
 import com.ruby.cyclone.configserver.models.business.Property;
 import com.ruby.cyclone.configserver.models.constants.FileFormat;
-import com.ruby.cyclone.configserver.repo.mongo.CountryRepository;
 import com.ruby.cyclone.configserver.repo.mongo.NamespaceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
-//TODO replace with country logic this dummy methods
 public class FileService {
 
-    private CountryRepository countryRepository;
     private NamespaceRepository namespaceRepository;
 
-    public List<String> getFiles(String namespace, String country) {
-        return countryRepository.findById(new CountryId(namespace, country))
-                .map(countryDao -> countryDao.getFiles().stream().map(f -> f.getName()).collect(Collectors.toList()))
-                .orElseThrow(() -> new RuntimeException("No such business or country")); //todo excepion management
+    @Autowired
+    public FileService(NamespaceRepository namespaceRepository) {
+        this.namespaceRepository = namespaceRepository;
+    }
+
+    public List<String> getFiles(String namespaceId, String countryId) {
+
+        Optional<Namespace> namespaceDao = this.namespaceRepository.findById(namespaceId);
+        return namespaceDao.map(ns -> ns.getCountries())
+                .flatMap(countries -> countries.stream().filter(c -> c.equals(countryId)).findFirst())
+                .map(Country::getFiles)
+                .orElseThrow(() -> new RuntimeException());
+
     }
 
     public String importProperties(String namespace, String country, FileFormat fileFormat, MultipartFile file) {
@@ -35,16 +43,25 @@ public class FileService {
     }
 
     public void exportFile(String namespace, String country, String filename) {
-
     }
 
-    public String addFile(String namespace, String country, String file) {
-        CountryId countryId = new CountryId(namespace, country);
-        Optional<Country> byId = this.countryRepository.findById(countryId);
-        return byId.map(countryDao -> {
-            countryDao.getFiles().add(new PropertiesFile(file));
-            this.countryRepository.save(countryDao);
-            return file;
-        }).orElseThrow(() -> new RuntimeException()); // todo exception mangement
+    public String addFile(String namespaceId, String countryId, String file) {
+        Optional<Namespace> namespace = this.namespaceRepository.findById(namespaceId);
+        return namespace.flatMap(ns -> {
+            List<Country> countries = ns.getCountries();
+            return countries.stream().filter(c -> c.equals(countryId)).findFirst()
+                    .flatMap(c -> {
+                        List<String> files = c.getFiles();
+                        if (files == null) {
+                            files = new ArrayList<>();
+                        }
+                        files.add(file);
+                        c.setFiles(files);
+                        ns.setCountries(countries);
+                        namespaceRepository.save(ns);
+
+                        return Optional.of(file);
+                    });
+        }).orElseThrow(() -> new RuntimeException());
     }
 }

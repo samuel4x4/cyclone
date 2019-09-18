@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/namespaces/{namespace}/countries/{country}")
@@ -18,7 +17,8 @@ public class FilesController {
     private FileService fileService;
 
     @Autowired
-    public FilesController() {
+    public FilesController(FileService fileService) {
+        this.fileService = fileService;
     }
 
     @GetMapping("/files")
