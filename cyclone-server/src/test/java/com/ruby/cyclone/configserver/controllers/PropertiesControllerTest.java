@@ -1,6 +1,5 @@
 package com.ruby.cyclone.configserver.controllers;
 
-import com.ruby.cyclone.configserver.models.api.response.SearchPropertiesResponse;
 import com.ruby.cyclone.configserver.models.business.Country;
 import com.ruby.cyclone.configserver.models.business.Namespace;
 import com.ruby.cyclone.configserver.models.business.Property;
@@ -15,11 +14,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import static java.util.Collections.singletonList;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(PropertiesController.class)
@@ -42,18 +47,15 @@ public class PropertiesControllerTest {
         PropertyId id = PropertyId.builder().namespace(NAMESPACE).business(COUNTRY).key("user.name").build();
         stringProperty.setId(id);
         stringProperty.setValue("ruby");
-        SearchPropertiesResponse builpropertiesResponse = SearchPropertiesResponse.builder()
-                .namespaces(Arrays.asList(Namespace.builder()
-                        .name(NAMESPACE)
-                        .countries(Arrays.asList(Country.builder().id(COUNTRY).name(COUNTRY)
-
-                                .properties(Arrays.asList(stringProperty))
-                                .build()))
+        List<Namespace> namespaces = singletonList(Namespace.builder()
+                .name(NAMESPACE)
+                .countries(singletonList(Country.builder().id(COUNTRY).name(COUNTRY)
+                        .properties(singletonList(stringProperty))
                         .build()))
-                .build();
+                .build());
 
         Mockito.when(propertiesService.searchProperties(NAMESPACE, COUNTRY, KEY_WORD))
-                .thenReturn(builpropertiesResponse);
+                .thenReturn(namespaces);
 
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/properties/search")
@@ -61,7 +63,10 @@ public class PropertiesControllerTest {
                 .param("namespace", NAMESPACE)
                 .param("country", COUNTRY)
                 .param("key", KEY_WORD)
-        ).andExpect(MockMvcResultMatchers.status().isOk());
+        ).andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$", hasSize(namespaces.size())))
+                .andExpect(jsonPath("$[0].name", is(namespaces.get(0).getName())))
+                .andExpect(jsonPath("$[0].countries[0].name", is(namespaces.get(0).getCountries().get(0).getName())));
 
     }
 
