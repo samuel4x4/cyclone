@@ -3,7 +3,6 @@ package com.ruby.cyclone.configserver.controllers;
 import com.ruby.cyclone.configserver.models.business.Country;
 import com.ruby.cyclone.configserver.models.business.Namespace;
 import com.ruby.cyclone.configserver.models.business.Property;
-import com.ruby.cyclone.configserver.models.business.PropertyId;
 import com.ruby.cyclone.configserver.services.PropertiesService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,8 +41,7 @@ public class PropertiesControllerTest {
     @Test
     public void test() throws Exception {
         Property<String> stringProperty = new Property<>();
-        PropertyId id = PropertyId.builder().namespace(NAMESPACE).country(COUNTRY).key("user.name").build();
-        stringProperty.setId(id);
+        stringProperty.setKey(KEY_WORD);
         stringProperty.setValue("ruby");
         List<Namespace> namespaces = singletonList(Namespace.builder()
                 .name(NAMESPACE)

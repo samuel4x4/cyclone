@@ -9,16 +9,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
+@Document(collection = "countries")
 @Data
 @Builder
 @EqualsAndHashCode
-@Document(collection = "countries")
 public class Country {
 
     @Id
     private String id;
+
     private String name;
 
     @DBRef
+    private Namespace namespace;
+
     private List<Property> properties;
 }

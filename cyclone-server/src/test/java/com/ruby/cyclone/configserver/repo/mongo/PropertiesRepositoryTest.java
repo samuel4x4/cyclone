@@ -2,7 +2,6 @@ package com.ruby.cyclone.configserver.repo.mongo;
 
 
 import com.ruby.cyclone.configserver.models.business.Property;
-import com.ruby.cyclone.configserver.models.business.PropertyId;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,16 +23,12 @@ public class PropertiesRepositoryTest {
     public void save() {
 
         Property<String> property = new Property<>();
-        PropertyId id = PropertyId.builder()
-                .key("user.name")
-                .file("application.properties")
-                .country("ORO")
-                .namespace("TEST")
-                .build();
-        property.setId(id);
+
+        String key = "user.name";
+        property.setKey(key);
         property.setValue("ruby");
         propertiesRepository.save(property);
-        Optional<Property> byId = propertiesRepository.findById(id);
+        Optional<Property> byId = propertiesRepository.findById(key);
         Assert.assertEquals(property, byId.get());
 
     }

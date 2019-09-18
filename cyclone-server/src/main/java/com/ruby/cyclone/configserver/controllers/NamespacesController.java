@@ -31,7 +31,7 @@ public class NamespacesController {
 
     @DeleteMapping("/{namespace}/archive")
     public void archive(@PathVariable String namespace) {
-        namespaceService.archive();
+        namespaceService.archive(namespace);
     }
 
 }
