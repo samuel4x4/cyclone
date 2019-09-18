@@ -9,7 +9,7 @@ import java.util.*;
 import static com.ruby.cyclone.configserver.controllers.DummyValues.DUMMY_NS;
 
 @Service
-//TODO replace with business logic this dummy methods
+//TODO replace with country logic this dummy methods
 public class FileService {
 
     public List<String> getFiles(String namespace, String country) {
@@ -18,14 +18,14 @@ public class FileService {
         }
         return Collections.emptyList();    }
 
-    public String importProperties(String namespace, String business, FileFormat fileFormat, MultipartFile file) {
+    public String importProperties(String namespace, String country, FileFormat fileFormat, MultipartFile file) {
         return  UUID.randomUUID().toString();
     }
 
-    public Map<String, Object> getPropertiesFromFile(String namespace, String business, String file) {
+    public Map<String, Object> getPropertiesFromFile(String namespace, String country, String file) {
         Map<String, Object> props = new HashMap<>();
-        for (int i = 0; i < (namespace + business + file).length() * new Random().nextInt(3); i++) {
-            props.put(file + "_name", "Un nume Frumos" + namespace + business);
+        for (int i = 0; i < (namespace + country + file).length() * new Random().nextInt(3); i++) {
+            props.put(file + "_name", "Un nume Frumos" + namespace + country);
         }
         return props;
     }

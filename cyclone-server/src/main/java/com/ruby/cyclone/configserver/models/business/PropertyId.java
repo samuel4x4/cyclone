@@ -14,7 +14,7 @@ public class PropertyId {
 
     private String key;
     private String namespace;
-    private String business;
+    private String country;
     private String file = "application.properties";
 }
 

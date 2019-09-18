@@ -9,5 +9,5 @@ import lombok.*;
 @EqualsAndHashCode
 public class PropertyLocation {
     private String namespace;
-    private String business;
+    private String country;
 }

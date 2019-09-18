@@ -27,7 +27,7 @@ public class PropertiesRepositoryTest {
         PropertyId id = PropertyId.builder()
                 .key("user.name")
                 .file("application.properties")
-                .business("ORO")
+                .country("ORO")
                 .namespace("TEST")
                 .build();
         property.setId(id);

@@ -17,8 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.singletonList;
@@ -44,7 +42,7 @@ public class PropertiesControllerTest {
     @Test
     public void test() throws Exception {
         Property<String> stringProperty = new Property<>();
-        PropertyId id = PropertyId.builder().namespace(NAMESPACE).business(COUNTRY).key("user.name").build();
+        PropertyId id = PropertyId.builder().namespace(NAMESPACE).country(COUNTRY).key("user.name").build();
         stringProperty.setId(id);
         stringProperty.setValue("ruby");
         List<Namespace> namespaces = singletonList(Namespace.builder()

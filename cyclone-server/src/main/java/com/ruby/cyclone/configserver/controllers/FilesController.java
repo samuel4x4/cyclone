@@ -21,31 +21,31 @@ public class FilesController {
     }
 
     @GetMapping("/files")
-    public List<String> getFiles(@PathVariable String namespace, @PathVariable String business) {
-        return this.fileService.getFiles(namespace, business);
+    public List<String> getFiles(@PathVariable String namespace, @PathVariable String country) {
+        return this.fileService.getFiles(namespace, country);
     }
 
     @PostMapping("/files")
     public String importPropertiesFromFile(@PathVariable String namespace,
-                                           @PathVariable String business,
+                                           @PathVariable String country,
                                            @RequestParam FileFormat fileFormat,
                                            @RequestBody MultipartFile file) {
-        return this.fileService.importProperties(namespace, business, fileFormat, file);
+        return this.fileService.importProperties(namespace, country, fileFormat, file);
     }
 
 
     @GetMapping("/files/export/{filename}")
     public void exportFileByName(@PathVariable String namespace,
-                                 @PathVariable String business,
+                                 @PathVariable String country,
                                  @PathVariable String filename) {
-        fileService.exportFile(namespace, business, filename);
+        fileService.exportFile(namespace, country, filename);
     }
 
     @GetMapping("/files/{file}/properties")
     public Map<String, Object> listProperties(@PathVariable String namespace,
-                                              @PathVariable String business,
+                                              @PathVariable String country,
                                               @PathVariable String file) {
-        return fileService.getPropertiesFromFile(namespace, business, file);
+        return fileService.getPropertiesFromFile(namespace, country, file);
 
     }
 

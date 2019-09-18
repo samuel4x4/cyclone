@@ -27,7 +27,7 @@ public class PropertiesService {
     }
 
     public void addProperty(AddNewPropertyRequest propertyRequest) {
-        PropertyId build = PropertyId.builder().namespace("TEST").business("DEV").file(propertyRequest.getFile()).key(propertyRequest.getKey()).build();
+        PropertyId build = PropertyId.builder().namespace("TEST").country("DEV").file(propertyRequest.getFile()).key(propertyRequest.getKey()).build();
         Property property = new Property();
         property.setId(build);
         property.setValue(propertyRequest.getDefaultValue());
