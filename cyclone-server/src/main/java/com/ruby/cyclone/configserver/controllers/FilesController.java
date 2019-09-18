@@ -1,5 +1,6 @@
 package com.ruby.cyclone.configserver.controllers;
 
+import com.ruby.cyclone.configserver.models.business.Property;
 import com.ruby.cyclone.configserver.models.constants.FileFormat;
 import com.ruby.cyclone.configserver.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,13 @@ public class FilesController {
         return this.fileService.getFiles(namespace, country);
     }
 
-    @PostMapping("/files")
+    @PostMapping("/files/{file}")
+
+    public String addFile(@PathVariable String namespace, @PathVariable String country, @PathVariable String file) {
+        return this.fileService.addFile(namespace, country, file);
+    }
+
+    @PostMapping("/files/import")
     public String importPropertiesFromFile(@PathVariable String namespace,
                                            @PathVariable String country,
                                            @RequestParam FileFormat fileFormat,
@@ -42,9 +49,9 @@ public class FilesController {
     }
 
     @GetMapping("/files/{file}/properties")
-    public Map<String, Object> listProperties(@PathVariable String namespace,
-                                              @PathVariable String country,
-                                              @PathVariable String file) {
+    public List<Property> listProperties(@PathVariable String namespace,
+                                         @PathVariable String country,
+                                         @PathVariable String file) {
         return fileService.getPropertiesFromFile(namespace, country, file);
 
     }

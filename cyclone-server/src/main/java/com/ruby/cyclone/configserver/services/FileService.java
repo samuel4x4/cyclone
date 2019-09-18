@@ -1,36 +1,50 @@
 package com.ruby.cyclone.configserver.services;
 
+import com.ruby.cyclone.configserver.models.business.Country;
+import com.ruby.cyclone.configserver.models.business.CountryId;
+import com.ruby.cyclone.configserver.models.business.PropertiesFile;
+import com.ruby.cyclone.configserver.models.business.Property;
 import com.ruby.cyclone.configserver.models.constants.FileFormat;
+import com.ruby.cyclone.configserver.repo.mongo.CountryRepository;
+import com.ruby.cyclone.configserver.repo.mongo.NamespaceRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
-
-import static com.ruby.cyclone.configserver.controllers.DummyValues.DUMMY_NS;
+import java.util.stream.Collectors;
 
 @Service
 //TODO replace with country logic this dummy methods
 public class FileService {
 
-    public List<String> getFiles(String namespace, String country) {
-        if (DUMMY_NS.contains(namespace.toLowerCase()) && DUMMY_NS.contains(country.toLowerCase())) {
-            return Arrays.asList("application.properties", "datastore.properties");
-        }
-        return Collections.emptyList();    }
+    private CountryRepository countryRepository;
+    private NamespaceRepository namespaceRepository;
 
-    public String importProperties(String namespace, String country, FileFormat fileFormat, MultipartFile file) {
-        return  UUID.randomUUID().toString();
+    public List<String> getFiles(String namespace, String country) {
+        return countryRepository.findById(new CountryId(namespace, country))
+                .map(countryDao -> countryDao.getFiles().stream().map(f -> f.getName()).collect(Collectors.toList()))
+                .orElseThrow(() -> new RuntimeException("No such business or country")); //todo excepion management
     }
 
-    public Map<String, Object> getPropertiesFromFile(String namespace, String country, String file) {
-        Map<String, Object> props = new HashMap<>();
-        for (int i = 0; i < (namespace + country + file).length() * new Random().nextInt(3); i++) {
-            props.put(file + "_name", "Un nume Frumos" + namespace + country);
-        }
-        return props;
+    public String importProperties(String namespace, String country, FileFormat fileFormat, MultipartFile file) {
+        return UUID.randomUUID().toString();
+    }
+
+    public List<Property> getPropertiesFromFile(String namespace, String country, String file) {
+        return null;
     }
 
     public void exportFile(String namespace, String country, String filename) {
 
+    }
+
+    public String addFile(String namespace, String country, String file) {
+        CountryId countryId = new CountryId(namespace, country);
+        Optional<Country> byId = this.countryRepository.findById(countryId);
+        return byId.map(countryDao -> {
+            countryDao.getFiles().add(new PropertiesFile(file));
+            this.countryRepository.save(countryDao);
+            return file;
+        }).orElseThrow(() -> new RuntimeException()); // todo exception mangement
     }
 }

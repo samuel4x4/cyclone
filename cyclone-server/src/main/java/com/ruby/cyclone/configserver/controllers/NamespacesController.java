@@ -24,9 +24,9 @@ public class NamespacesController {
         return namespaceService.getNamespaces();
     }
 
-    @PostMapping
-    public String addNamespace(@RequestBody AddNamespaceRequest namespaceRequest) {
-        return namespaceService.addNamespace(namespaceRequest);
+    @PostMapping("/{namespace}")
+    public String addNamespace(@PathVariable String namespace) {
+        return namespaceService.addNamespace(namespace);
     }
 
     @DeleteMapping("/{namespace}/archive")

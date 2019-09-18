@@ -23,14 +23,14 @@ public class CountriesController {
         return countryService.getBusinesses(namespace);
     }
 
-    @PostMapping()
-    public String addBusiness(@PathVariable String namespace, @RequestBody String country) {
-        return UUID.randomUUID().toString();
+    @PostMapping("/{country}")
+    public String addBusiness(@PathVariable String namespace, @PathVariable String country) {
+        return countryService.addCountry(namespace, country);
     }
 
     @DeleteMapping("/{country}/archive")
     public void archive(@PathVariable String namespace, @PathVariable String country) {
-        this.countryService.archive(country);
+        this.countryService.archive(namespace, country);
     }
 
 }

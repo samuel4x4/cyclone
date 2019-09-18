@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -16,12 +15,7 @@ import java.util.List;
 public class Country {
 
     @Id
-    private String id;
+    private CountryId id;
+    private List<PropertiesFile> files;
 
-    private String name;
-
-    @DBRef
-    private Namespace namespace;
-
-    private List<Property> properties;
 }

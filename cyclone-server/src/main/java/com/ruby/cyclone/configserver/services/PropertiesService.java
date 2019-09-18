@@ -15,6 +15,8 @@ public class PropertiesService {
 
     PropertiesRepository propertiesRepository;
 
+
+
     @Autowired
     public PropertiesService(PropertiesRepository propertiesRepository) {
         this.propertiesRepository = propertiesRepository;
@@ -26,7 +28,7 @@ public class PropertiesService {
     }
 
     public void addProperty(AddNewPropertyRequest propertyRequest) {
-
+//        propertiesRepository.save()
     }
 
     public void updateProperty(UpdatePropertyRequest propertyRequest) {

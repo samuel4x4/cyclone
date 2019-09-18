@@ -31,13 +31,12 @@ public class NamespaceService {
     }
 
     @Transactional
-    public String addNamespace(AddNamespaceRequest namespaceRequest) {
-        String namespaceId = namespaceRequest.getName();
-        if (namespaceRepository.existsById(namespaceId)) {
+    public String addNamespace(String namespace) {
+        if (namespaceRepository.existsById(namespace)) {
             throw new RuntimeException("Namespace already exists");
             //@cimpoeru TODO make your own exception and make controller advice
         }
-        return namespaceRepository.save(Namespace.builder().name(namespaceId).build()).getName();
+        return namespaceRepository.save(Namespace.builder().name(namespace).build()).getName();
     }
 
     @Transactional
