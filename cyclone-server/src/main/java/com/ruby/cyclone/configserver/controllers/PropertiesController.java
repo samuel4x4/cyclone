@@ -24,9 +24,9 @@ public class PropertiesController {
 
     @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
     public SearchPropertiesResponse searchProperties(@RequestParam(defaultValue = "all") String namespace,
-                                                     @RequestParam(defaultValue = "all") String business,
-                                                     @RequestParam String keyWord) {
-        return propertiesService.searchProperties(namespace, business, keyWord);
+                                                     @RequestParam(defaultValue = "all") String country,
+                                                     @RequestParam String key) {
+        return propertiesService.searchProperties(namespace, country, key);
     }
 
 

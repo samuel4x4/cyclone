@@ -22,7 +22,8 @@ public class PropertiesRepositoryTest {
 
     @Test
     public void save() {
-        Property property = new Property();
+
+        Property<String> property = new Property<>();
         PropertyId id = PropertyId.builder()
                 .key("user.name")
                 .file("application.properties")
