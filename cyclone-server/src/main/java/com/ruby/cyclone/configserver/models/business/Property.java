@@ -15,7 +15,7 @@ public class Property<T> {
 
     @Id
     @Indexed
-    private PropertyId key;
+    private PropertyId id;
 
     @Indexed
     private T value;

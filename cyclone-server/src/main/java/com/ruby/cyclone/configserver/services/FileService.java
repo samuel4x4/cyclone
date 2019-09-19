@@ -1,6 +1,7 @@
 package com.ruby.cyclone.configserver.services;
 
 import com.ruby.cyclone.configserver.models.business.Country;
+import com.ruby.cyclone.configserver.models.business.FileName;
 import com.ruby.cyclone.configserver.models.business.Namespace;
 import com.ruby.cyclone.configserver.models.business.Property;
 import com.ruby.cyclone.configserver.models.constants.FileFormat;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class FileService {
@@ -30,7 +32,9 @@ public class FileService {
         return namespaceDao.map(ns -> ns.getCountries())
                 .flatMap(countries -> countries.stream().filter(c -> c.equals(countryId)).findFirst())
                 .map(Country::getFiles)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new RuntimeException())
+                .stream()
+                .map(FileName::getName).collect(Collectors.toList());
 
     }
 
@@ -51,11 +55,11 @@ public class FileService {
             List<Country> countries = ns.getCountries();
             return countries.stream().filter(c -> c.getId().equals(countryId)).findFirst()
                     .flatMap(c -> {
-                        List<String> files = c.getFiles();
+                        List<FileName> files = c.getFiles();
                         if (files == null) {
                             files = new ArrayList<>();
                         }
-                        files.add(file);
+                        files.add(new FileName(file));
                         c.setFiles(files);
                         ns.setCountries(countries);
                         namespaceRepository.save(ns);

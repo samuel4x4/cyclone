@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "countries")
@@ -20,6 +21,6 @@ public class Country {
     @Id
     private String id;
     @Field
-    private List<String> files;
+    private List<FileName> files = new ArrayList<>();
 
 }

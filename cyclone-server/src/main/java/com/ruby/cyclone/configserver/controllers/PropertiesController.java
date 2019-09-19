@@ -1,14 +1,16 @@
 package com.ruby.cyclone.configserver.controllers;
 
 import com.ruby.cyclone.configserver.models.api.request.AddNewPropertyRequest;
+import com.ruby.cyclone.configserver.models.api.request.PropertyLocation;
 import com.ruby.cyclone.configserver.models.api.request.UpdatePropertyRequest;
-import com.ruby.cyclone.configserver.models.business.Namespace;
+import com.ruby.cyclone.configserver.models.business.Property;
 import com.ruby.cyclone.configserver.services.PropertiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/properties")
@@ -23,9 +25,9 @@ public class PropertiesController {
     }
 
     @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Namespace> searchProperties(@RequestParam(defaultValue = "*") String namespace,
-                                            @RequestParam(defaultValue = "*") String country,
-                                            @RequestParam(defaultValue = "*") String key) {
+    public Map<PropertyLocation, List<Property>> searchProperties(@RequestParam(defaultValue = "") String namespace,
+                                                                  @RequestParam(defaultValue = "") String country,
+                                                                  @RequestParam(defaultValue = "") String key) {
         return propertiesService.searchProperties(namespace, country, key);
     }
 
