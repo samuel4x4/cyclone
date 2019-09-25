@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Namespace } from './../shared/models/namespace';
-import { NamespaceComponent } from './../namespace/namespace.component';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-list-namespaces',
   templateUrl: './list-namespaces.component.html',
   styleUrls: ['./list-namespaces.component.scss']
 })
 export class ListNamespacesComponent implements OnInit {
-  queryParams: any;
-  showTemplate = true;
-  namespaces: Namespace[] = [
+  @Output() validateFormEmitter = new EventEmitter();
+  listNamespaces: FormGroup;
+  namespaces: any[] = [
     {
       title: 'Dev',
       description:
@@ -31,17 +30,17 @@ export class ListNamespacesComponent implements OnInit {
     }
   ];
 
-  constructor(private activatedRoute: ActivatedRoute) {
-    activatedRoute.queryParamMap.subscribe(queryParams => {
-      this.queryParams = queryParams;
-
-      if (Object.keys(this.queryParams.params).length > 0) {
-        this.showTemplate = false;
-      } else {
-        this.showTemplate = true;
-      }
+  constructor(private formBuilder: FormBuilder) {
+    this.listNamespaces = this.formBuilder.group({
+      selectedNameSpace: ['', Validators.required]
     });
   }
 
   ngOnInit() {}
+
+  validateCrtStep() {
+    setTimeout(() => {
+      this.validateFormEmitter.emit(this.listNamespaces.valid);
+    }, 100);
+  }
 }

@@ -23,7 +23,7 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    redirectTo: 'namespaces'
+    component: HomeComponent
   },
   {
     path: 'countries',
@@ -35,7 +35,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'namespaces'
+    redirectTo: 'home'
   }
 ];
 

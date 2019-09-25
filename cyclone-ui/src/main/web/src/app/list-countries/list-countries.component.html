@@ -1,10 +1,28 @@
-<div class="fluid-container" *ngIf="showTemplate">
+<div class="fluid-container">
   <div class="row">
-    <div class="col-12 py-3"><h3>Country select</h3></div>
-    <div class="col-4 cstBox" *ngFor="let country of countries">
-      <app-country [country]="country"></app-country>
-    </div>
+    <form [formGroup]="listCountries" class="container">
+      <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="row"
+        formControlName="selectedCountry"
+      >
+        <mat-radio-button
+          class="card col-4 shadow-sm"
+          *ngFor="let country of countries"
+          [value]="country.name"
+          required
+          (click)="validateCrtStep()"
+        >
+          <div class="card-header">
+            <p class="card-text">
+              {{ country.name }}
+            </p>
+          </div>
+          <div class="card-body">
+            <span class="flag-icon flag-icon-{{ country.id }}"></span>
+          </div>
+        </mat-radio-button>
+      </mat-radio-group>
+    </form>
   </div>
 </div>
-
-<router-outlet></router-outlet>

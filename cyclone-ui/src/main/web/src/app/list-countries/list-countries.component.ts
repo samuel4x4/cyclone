@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { CountryComponent } from './../country/country.component';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Country } from './../shared/models/country-model';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-list-countries',
   templateUrl: './list-countries.component.html',
   styleUrls: ['./list-countries.component.scss']
 })
 export class ListCountriesComponent implements OnInit {
-  queryParams: any;
-  showTemplate = true;
+  @Output() validateFormEmitter = new EventEmitter();
+  listCountries: FormGroup;
+
   countries: Country[] = [
     { id: 'ro', name: 'Romania' },
     { id: 'es', name: 'Spain' },
@@ -22,17 +23,17 @@ export class ListCountriesComponent implements OnInit {
     { id: 'lu', name: 'Luxembourg' }
   ];
 
-  constructor(private activatedRoute: ActivatedRoute) {
-    activatedRoute.queryParamMap.subscribe(queryParams => {
-      this.queryParams = queryParams;
-
-      if (Object.keys(this.queryParams.params).length > 1) {
-        this.showTemplate = false;
-      } else {
-        this.showTemplate = true;
-      }
+  constructor(private formBuilder: FormBuilder) {
+    this.listCountries = this.formBuilder.group({
+      selectedCountry: ['', Validators.required]
     });
   }
 
   ngOnInit() {}
+
+  validateCrtStep() {
+    setTimeout(() => {
+      this.validateFormEmitter.emit(this.listCountries.valid);
+    }, 200);
+  }
 }
