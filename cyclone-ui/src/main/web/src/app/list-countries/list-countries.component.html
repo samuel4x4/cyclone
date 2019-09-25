@@ -1,0 +1,10 @@
+<div class="fluid-container" *ngIf="showTemplate">
+  <div class="row">
+    <div class="col-12 py-3"><h3>Country select</h3></div>
+    <div class="col-4 cstBox" *ngFor="let country of countries">
+      <app-country [country]="country"></app-country>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
