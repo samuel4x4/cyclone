@@ -40,7 +40,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             username = jwtTokenUtil.getTokenUsername(jwtToken);
         }
 
-        if(username != null && SecurityContextHolder.getContext().getAuthentication() != null) {
+        if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(username);
             // after validating the token, we setup Spring Security authentication
             if(jwtTokenUtil.validateToken(jwtToken, userDetails)) {
