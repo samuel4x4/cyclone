@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,11 +42,12 @@ public class JwtTokenUtil {
     }
 
     public String generateToken(Map<String, Object> claims, String subject) {
-        long now = Time.now();
+        long now = System.currentTimeMillis();
         return Jwts.builder()
                 .setClaims(claims)
+                .setSubject(subject)
                 .setIssuedAt(new Date(now))
-                .setExpiration(new Date(now + tokenValidity))
+                .setExpiration(new Date(now + tokenValidity * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
