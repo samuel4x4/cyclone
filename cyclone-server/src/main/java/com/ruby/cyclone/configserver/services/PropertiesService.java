@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class PropertiesService {
@@ -31,7 +30,7 @@ public class PropertiesService {
     public Map<PropertyLocation, List<Property>> searchProperties(String namespace, String business, String keyWord) {
         List<Property> properties = propertiesRepository.searchByKeyAndLocation(namespace, business, "", keyWord);
         return groupProperties(properties);
-}
+    }
 
     private Map<PropertyLocation, List<Property>> groupProperties(List<Property> properties) {
         if (properties == null || properties.isEmpty()) {
@@ -60,28 +59,36 @@ public class PropertiesService {
             throw new RuntimeException("no namepsaces defined");
         }
         for (Namespace ns : namespaces) {
-            List<Country> countries = ns.getCountries();
-            if (countries == null || countries.isEmpty()) {
-                continue;
-            }
-            countries.forEach(country -> {
-                PropertyId pId = PropertyId.builder()
-                        .namespace(ns.getName())
-                        .country(country.getId())
-                        .key(propertyRequest.getKey())
-                        .build();
-                Property property = new Property();
-                property.setId(pId);
-                property.setValue(propertyRequest.getDefaultValue());
-                property.setFile(propertyRequest.getFile());
-                if (propertiesRepository.existsById(pId)) {
-                    return;
-                }
-                propertiesRepository.save(property);
-            });
+            addPropertiesInAllNamespaces(propertyRequest, ns);
 
         }
 
+    }
+
+    private void addPropertiesInAllNamespaces(AddNewPropertyRequest propertyRequest, Namespace ns) {
+        List<Country> countries = ns.getCountries();
+        if (countries == null || countries.isEmpty()) {
+            return;
+        }
+        countries.forEach(country -> {
+            addPropertyForOneCountry(propertyRequest, ns, country);
+        });
+    }
+
+    private void addPropertyForOneCountry(AddNewPropertyRequest propertyRequest, Namespace ns, Country country) {
+        PropertyId pId = PropertyId.builder()
+                .namespace(ns.getName())
+                .country(country.getId())
+                .key(propertyRequest.getKey())
+                .build();
+        Property property = new Property();
+        property.setId(pId);
+        property.setValue(propertyRequest.getDefaultValue());
+        property.setFile(propertyRequest.getFile());
+        if (propertiesRepository.existsById(pId)) {
+            return;
+        }
+        propertiesRepository.save(property);
     }
 
     public void updateProperty(UpdatePropertyRequest propertyRequest) {
