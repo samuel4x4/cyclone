@@ -14,7 +14,11 @@ public interface PropertiesRepository extends MongoRepository<Property, Property
             "'_id.country':{'$regex' : ?1}, " +
             "'_id.file':{'$regex' : ?2}, " +
             "'_id.key':{'$regex' : ?3}}")
-    List<Property> searchByKeyAndLocation(String namespace, String country, String file,String key);
+    List<Property> searchByKeyAndLocationRegexes(String namespace, String country, String file, String key);
+
+
+    @Query("{'_id.namespace': ?0, '_id.country': ?1, '_id.file': ?2 }")
+    List<Property> getPropertiesFromFile(String namespace, String country, String file);
 
 
 }

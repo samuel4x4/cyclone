@@ -28,7 +28,7 @@ public class PropertiesService {
 
 
     public Map<PropertyLocation, List<Property>> searchProperties(String namespace, String business, String keyWord) {
-        List<Property> properties = propertiesRepository.searchByKeyAndLocation(namespace, business, "", keyWord);
+        List<Property> properties = propertiesRepository.searchByKeyAndLocationRegexes(namespace, business, "", keyWord);
         return groupProperties(properties);
     }
 

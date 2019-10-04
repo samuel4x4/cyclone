@@ -99,7 +99,7 @@ public class FileService {
     }
 
     private Properties readPropertiesFromDb(String namespace, String country, String filename) {
-        List<Property> appProperties = propertiesRepository.searchByKeyAndLocation(namespace, country, filename, "");
+        List<Property> appProperties = propertiesRepository.getPropertiesFromFile(namespace, country, filename);
 
         Properties properties = new Properties();
         appProperties.forEach(p -> {
