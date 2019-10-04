@@ -4,12 +4,15 @@ import com.ruby.cyclone.configserver.models.business.*;
 import com.ruby.cyclone.configserver.models.constants.FileFormat;
 import com.ruby.cyclone.configserver.repo.mongo.NamespaceRepository;
 import com.ruby.cyclone.configserver.repo.mongo.PropertiesRepository;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -70,9 +73,39 @@ public class FileService {
         return null;
     }
 
-    public void exportFile(String namespace, String country, String filename) {
+    public Resource exportFile(String namespace, String country, String filename) throws IOException {
 
+        File tempDirectory = new File("./export");
+        tempDirectory.mkdir();
+        File tempFile = new File("./export/" + filename);
+        try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+            Properties properties = readPropertiesFromDb(namespace, country, filename);
+            properties.store(fos, "");
+        }
+        try (FileInputStream fis = new FileInputStream(tempFile)) {
 
+            Resource resource = new ByteArrayResource(IOUtils.toByteArray(fis));
+            if (resource.exists()) {
+                return resource;
+            } else {
+                throw new RuntimeException("File not found " + filename);
+            }
+        } catch (MalformedURLException ex) {
+            throw new RuntimeException("File not found " + filename, ex);
+        } finally {
+            tempFile.delete();
+            tempDirectory.delete();
+        }
+    }
+
+    private Properties readPropertiesFromDb(String namespace, String country, String filename) {
+        List<Property> appProperties = propertiesRepository.searchByKeyAndLocation(namespace, country, filename, "");
+
+        Properties properties = new Properties();
+        appProperties.forEach(p -> {
+            properties.put(p.getId().getKey(), p.getValue());
+        });
+        return properties;
     }
 
     public String addFile(String namespaceId, String countryId, String file) {
