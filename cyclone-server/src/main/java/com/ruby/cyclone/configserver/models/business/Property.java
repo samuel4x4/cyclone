@@ -20,8 +20,9 @@ public class Property<T> {
     @Indexed
     private T value;
 
-
     private String file;
+
+    private String description;
 
 }
 

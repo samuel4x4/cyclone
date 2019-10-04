@@ -8,7 +8,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 @Builder
 public class PropertyId {
+
+    private String tenant;
     private String namespace;
     private String country;
     private String key;
+
 }
