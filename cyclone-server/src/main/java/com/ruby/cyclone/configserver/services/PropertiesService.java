@@ -29,14 +29,8 @@ public class PropertiesService {
 
 
     public Map<PropertyLocation, List<Property>> searchProperties(String namespace, String business, String keyWord) {
-        List<Property> properties = propertiesRepository.findAll();
-        List<Property> filteredProperties = properties.stream().filter(p -> {
-            return p.getId().getNamespace().toLowerCase().contains(namespace.toLowerCase())
-                    && p.getId().getCountry().toLowerCase().contains(business.toLowerCase())
-                    && p.getId().getKey().toLowerCase().contains(keyWord.toLowerCase());
-        }).collect(Collectors.toList());
-
-        return groupProperties(filteredProperties);
+        List<Property> properties = propertiesRepository.searchByKeyAndLocation(namespace, business, "", keyWord);
+        return groupProperties(properties);
 }
 
     private Map<PropertyLocation, List<Property>> groupProperties(List<Property> properties) {
