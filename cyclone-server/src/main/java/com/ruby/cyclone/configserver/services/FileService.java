@@ -1,22 +1,19 @@
 package com.ruby.cyclone.configserver.services;
 
-import com.ruby.cyclone.configserver.models.business.Country;
-import com.ruby.cyclone.configserver.models.business.FileName;
-import com.ruby.cyclone.configserver.models.business.Namespace;
-import com.ruby.cyclone.configserver.models.business.Property;
+import com.ruby.cyclone.configserver.models.business.*;
 import com.ruby.cyclone.configserver.models.constants.FileFormat;
 import com.ruby.cyclone.configserver.repo.mongo.NamespaceRepository;
+import com.ruby.cyclone.configserver.repo.mongo.PropertiesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,9 +21,12 @@ public class FileService {
 
     private NamespaceRepository namespaceRepository;
 
+    private PropertiesRepository propertiesRepository;
+
     @Autowired
-    public FileService(NamespaceRepository namespaceRepository) {
+    public FileService(NamespaceRepository namespaceRepository, PropertiesRepository propertiesRepository) {
         this.namespaceRepository = namespaceRepository;
+        this.propertiesRepository = propertiesRepository;
     }
 
     public List<String> getFiles(String namespaceId, String countryId) {
@@ -46,7 +46,21 @@ public class FileService {
 
         System.out.println(originalFilename);
         InputStream is = file.getInputStream();
-//        FileReader fr = new FileReader();
+        Properties properties = new Properties();
+        properties.load(is);
+        List<Property> appProperties = new ArrayList<>();
+        properties.forEach((k, v) -> {
+            PropertyId id = PropertyId.builder().key(k.toString())
+                    .namespace(namespace)
+                    .country(country)
+                    .build();
+            Property property = new Property();
+            property.setId(id);
+            property.setValue(v);
+            property.setFile(file.getOriginalFilename());
+            appProperties.add(property);
+        });
+        propertiesRepository.saveAll(appProperties);
         return originalFilename;
 
 
