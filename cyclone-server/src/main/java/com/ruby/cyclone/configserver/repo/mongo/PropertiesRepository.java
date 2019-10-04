@@ -10,7 +10,7 @@ import java.util.List;
 public interface PropertiesRepository extends MongoRepository<Property, PropertyId> {
 
 
-    @Query("{'_id.namespace': ?0, '_id.country':?1, '_id.key':?2}")
+    @Query("{'_id.namespace': ?0, '_id.country':?1, '_id.key':{'$regex' : ?2}}")
     List<Property> searchByKeyAndLocation(String namespace, String country, String key);
 
 
