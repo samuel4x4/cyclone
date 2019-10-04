@@ -23,5 +23,7 @@ public class Namespace {
     @Id
     private String name;
 
+    private String description;
+
     private List<Country> countries = new ArrayList<>();
 }
