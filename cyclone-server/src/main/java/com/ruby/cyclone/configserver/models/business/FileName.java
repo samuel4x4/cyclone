@@ -15,5 +15,5 @@ public class FileName {
     @Id
     String name;
 
-    private String description;
+
 }

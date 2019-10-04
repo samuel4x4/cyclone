@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,8 +41,15 @@ public class FileService {
 
     }
 
-    public String importProperties(String namespace, String country, FileFormat fileFormat, MultipartFile file) {
-        return UUID.randomUUID().toString();
+    public String importProperties(String namespace, String country, FileFormat fileFormat, MultipartFile file) throws IOException {
+        String originalFilename = file.getOriginalFilename();
+
+        System.out.println(originalFilename);
+        InputStream is = file.getInputStream();
+//        FileReader fr = new FileReader();
+        return originalFilename;
+
+
     }
 
     public List<Property> getPropertiesFromFile(String namespace, String country, String file) {
