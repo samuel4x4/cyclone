@@ -22,6 +22,8 @@ public class Country {
     private String id;
 
 
+    private String description;
+
     @Field
     private List<FileName> files = new ArrayList<>();
 

@@ -35,7 +35,6 @@ public class NamespaceService {
     public String addNamespace(String namespace) {
         if (namespaceRepository.existsById(namespace)) {
             throw new RuntimeException("Namespace already exists");
-            //@cimpoeru TODO make your own exception and make controller advice
         }
         return namespaceRepository.save(Namespace.builder().name(namespace)
                 .countries(new ArrayList<>())

@@ -79,12 +79,12 @@ public class PropertiesService {
         PropertyId pId = PropertyId.builder()
                 .namespace(ns.getName())
                 .country(country.getId())
+                .file(propertyRequest.getFile())
                 .key(propertyRequest.getKey())
                 .build();
         Property property = new Property();
         property.setId(pId);
         property.setValue(propertyRequest.getDefaultValue());
-        property.setFile(propertyRequest.getFile());
         if (propertiesRepository.existsById(pId)) {
             return;
         }

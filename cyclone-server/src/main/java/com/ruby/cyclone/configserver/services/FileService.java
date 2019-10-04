@@ -56,11 +56,11 @@ public class FileService {
             PropertyId id = PropertyId.builder().key(k.toString())
                     .namespace(namespace)
                     .country(country)
+                    .file(file.getOriginalFilename())
                     .build();
             Property property = new Property();
             property.setId(id);
             property.setValue(v);
-            property.setFile(file.getOriginalFilename());
             appProperties.add(property);
         });
         propertiesRepository.saveAll(appProperties);
