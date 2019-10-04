@@ -70,7 +70,7 @@ public class FileService {
     }
 
     public List<Property> getPropertiesFromFile(String namespace, String country, String file) {
-        return null;
+        return propertiesRepository.getPropertiesFromFile(namespace, country, file);
     }
 
     public Resource exportFile(String namespace, String country, String filename) throws IOException {
