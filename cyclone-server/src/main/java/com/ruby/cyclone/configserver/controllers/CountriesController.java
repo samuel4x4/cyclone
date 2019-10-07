@@ -1,5 +1,6 @@
 package com.ruby.cyclone.configserver.controllers;
 
+import com.ruby.cyclone.configserver.models.business.Country;
 import com.ruby.cyclone.configserver.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +20,12 @@ public class CountriesController {
     }
 
     @GetMapping()
-    public List<String> getBusinesses(@PathVariable String namespace) {
+    public List<Country> getBusinesses(@PathVariable String namespace) {
         return countryService.getBusinesses(namespace);
     }
 
-    @PostMapping("/{country}")
-    public String addBusiness(@PathVariable String namespace, @PathVariable String country) {
+    @PostMapping()
+    public String addCountry(@PathVariable String namespace, @RequestBody Country country) {
         return countryService.addCountry(namespace, country);
     }
 

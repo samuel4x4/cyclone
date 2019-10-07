@@ -22,6 +22,7 @@ public class Country {
     @Id
     private String id;
 
+    private String country;
 
     private String description;
 

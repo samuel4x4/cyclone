@@ -18,7 +18,6 @@ public class Property<T> {
     @Id
     private PropertyId id;
 
-    @Indexed
     private T value;
 
     private String description;
