@@ -1,24 +1,25 @@
 package com.ruby.cyclone.configserver.models.business;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-@Document(collection = "namespaces")
+@Document(collection = "tenants")
 @Data
 @Builder
-@AllArgsConstructor
-
-public class Namespace {
+@EqualsAndHashCode
+public class Tenant {
 
     @Id
     private String id;
@@ -27,8 +28,14 @@ public class Namespace {
     @Indexed(unique = true)
     private String name;
 
-    @DBRef
-    private Tenant tenant;
+    private String description;
 
-    private List<Country> countries = new ArrayList<>();
+    @DBRef
+    private List<Namespace> namespaces = new ArrayList<>();
+
+    @CreatedDate
+    private Instant createdAt;
+
+    @LastModifiedDate
+    private Instant modifiedAt;
 }

@@ -20,6 +20,7 @@ public class Country {
 
     @Id
     private String id;
+
     @Field
     private List<FileName> files = new ArrayList<>();
 
