@@ -49,19 +49,21 @@ public class FileService {
         String originalFilename = file.getOriginalFilename();
 
         Optional<Namespace> optionalNamespace = namespaceRepository.findById(namespace);
-        Namespace namespaceFromDb = optionalNamespace.get();
+        Namespace namespaceFromDb = optionalNamespace.orElseThrow(RuntimeException::new);
         List<Country> countries = namespaceFromDb.getCountries();
+
 
         Country country1 = countries
                 .stream()
                 .filter(c -> c.getId().equals(country))
-                .findFirst().get();
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
 
         @UniqueElements List<FileName> files = country1.getFiles();
         if (files == null) {
             files = new ArrayList<>();
         }
-        boolean fileExists = !files.stream().anyMatch(f -> f.equals(file.getOriginalFilename()));
+        boolean fileExists = files.stream().anyMatch(f -> f.getName().equals(file.getOriginalFilename()));
         if (!fileExists) {
             files.add(new FileName(file.getOriginalFilename()));
             country1.setFiles(files);
@@ -69,8 +71,6 @@ public class FileService {
             namespaceRepository.save(namespaceFromDb);
         }
 
-
-        System.out.println(originalFilename);
         InputStream is = file.getInputStream();
         Properties properties = new Properties();
         properties.load(is);
