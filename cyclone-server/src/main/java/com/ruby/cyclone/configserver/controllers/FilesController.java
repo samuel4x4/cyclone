@@ -4,9 +4,12 @@ import com.ruby.cyclone.configserver.models.business.Property;
 import com.ruby.cyclone.configserver.models.constants.FileFormat;
 import com.ruby.cyclone.configserver.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -32,20 +35,21 @@ public class FilesController {
         return this.fileService.addFile(namespace, country, file);
     }
 
-    @PostMapping("/files/import")
+    @PostMapping(value = "/files/import")
     public String importPropertiesFromFile(@PathVariable String namespace,
                                            @PathVariable String country,
                                            @RequestParam FileFormat fileFormat,
-                                           @RequestBody MultipartFile file) {
+                                           @RequestParam MultipartFile file) throws IOException {
         return this.fileService.importProperties(namespace, country, fileFormat, file);
     }
 
 
-    @GetMapping("/files/export/{filename}")
-    public void exportFileByName(@PathVariable String namespace,
-                                 @PathVariable String country,
-                                 @PathVariable String filename) {
-        fileService.exportFile(namespace, country, filename);
+    @GetMapping(value = "/files/export/{filename}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public @ResponseBody Resource exportFileByName(@PathVariable String namespace,
+                              @PathVariable String country,
+                              @PathVariable String filename) throws IOException {
+       return fileService.exportFile(namespace, country, filename);
+
     }
 
     @GetMapping("/files/{file}/properties")
