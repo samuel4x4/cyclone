@@ -25,9 +25,7 @@ public class CountryService {
     public List<Country> getBusinesses(String namespace) {
         return namespaceRepository.findById(namespace)
                 .map(Namespace::getCountries)
-                .orElseThrow(() -> new RuntimeException())
-                .stream()
-                .collect(Collectors.toList());
+                .orElseThrow(RuntimeException::new);
     }
 
 
