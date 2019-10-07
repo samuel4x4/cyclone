@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -45,6 +46,7 @@ public class FileService {
 
     }
 
+    @Transactional
     public String importProperties(String namespace, String country, FileFormat fileFormat, MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();
 
