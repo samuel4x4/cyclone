@@ -12,6 +12,7 @@ import com.ruby.cyclone.configserver.repo.mongo.PropertiesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Service
@@ -65,7 +66,7 @@ public class PropertiesService {
 
     }
 
-    private void addPropertiesInAllNamespaces(AddNewPropertyRequest propertyRequest, Namespace ns) {
+    private void addPropertiesInAllNamespaces(@NotNull AddNewPropertyRequest propertyRequest, @NotNull Namespace ns) {
         List<Country> countries = ns.getCountries();
         if (countries == null || countries.isEmpty()) {
             return;

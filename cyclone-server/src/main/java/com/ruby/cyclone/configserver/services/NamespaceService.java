@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -32,13 +33,12 @@ public class NamespaceService {
     }
 
     @Transactional
-    public String addNamespace(String namespace) {
-        if (namespaceRepository.existsById(namespace)) {
+    public String addNamespace(Namespace namespace) {
+        if (namespaceRepository.existsById(namespace.getName())) {
             throw new RuntimeException("Namespace already exists");
         }
-        return namespaceRepository.save(Namespace.builder().name(namespace)
-                .countries(new ArrayList<>())
-                .build()).getName();
+        namespace.setCountries(Collections.emptyList());
+        return namespaceRepository.save(namespace).getName();
     }
 
     @Transactional

@@ -1,6 +1,7 @@
 package com.ruby.cyclone.configserver.controllers;
 
 import com.ruby.cyclone.configserver.models.api.request.AddNamespaceRequest;
+import com.ruby.cyclone.configserver.models.business.Namespace;
 import com.ruby.cyclone.configserver.services.NamespaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +25,8 @@ public class NamespacesController {
         return namespaceService.getNamespaces();
     }
 
-    @PostMapping("/{namespace}")
-    public String addNamespace(@PathVariable String namespace) {
+    @PostMapping
+    public String addNamespace(@RequestBody Namespace namespace) {
         return namespaceService.addNamespace(namespace);
     }
 
