@@ -67,7 +67,7 @@ public class PropertiesService {
     }
 
     private void addPropertiesInAllNamespaces(@NotNull AddNewPropertyRequest propertyRequest, @NotNull Namespace ns) {
-        List<Country> countries = ns.getCountries();
+        Set<Country> countries = ns.getCountries();
         if (countries == null || countries.isEmpty()) {
             return;
         }

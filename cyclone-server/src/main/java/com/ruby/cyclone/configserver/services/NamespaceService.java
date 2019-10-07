@@ -37,7 +37,7 @@ public class NamespaceService {
         if (namespaceRepository.existsById(namespace.getName())) {
             throw new RuntimeException("Namespace already exists");
         }
-        namespace.setCountries(Collections.emptyList());
+        namespace.setCountries(Collections.emptySet());
         return namespaceRepository.save(namespace).getName();
     }
 

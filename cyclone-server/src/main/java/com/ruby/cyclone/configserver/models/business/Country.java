@@ -10,7 +10,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Document(collection = "countries")
 @Data
@@ -28,6 +30,6 @@ public class Country {
 
     @Field
     @UniqueElements
-    private List<FileName> files = new ArrayList<>();
+    private Set<FileName> files = new HashSet<>();
 
 }

@@ -15,10 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,7 +49,7 @@ public class FileService {
 
         Optional<Namespace> optionalNamespace = namespaceRepository.findById(namespace);
         Namespace namespaceFromDb = optionalNamespace.orElseThrow(RuntimeException::new);
-        List<Country> countries = namespaceFromDb.getCountries();
+        Set<Country> countries = namespaceFromDb.getCountries();
 
 
         Country country1 = countries
@@ -61,9 +58,9 @@ public class FileService {
                 .findFirst()
                 .orElseThrow(RuntimeException::new);
 
-        @UniqueElements List<FileName> files = country1.getFiles();
+        @UniqueElements Set<FileName> files = country1.getFiles();
         if (files == null) {
-            files = new ArrayList<>();
+            files = new HashSet<>();
         }
         boolean fileExists = files.stream().anyMatch(f -> f.getName().equals(file.getOriginalFilename()));
         if (!fileExists) {
@@ -136,12 +133,12 @@ public class FileService {
     public String addFile(String namespaceId, String countryId, String file) {
         Optional<Namespace> namespace = this.namespaceRepository.findById(namespaceId);
         return namespace.flatMap(ns -> {
-            List<Country> countries = ns.getCountries();
+            Set<Country> countries = ns.getCountries();
             return countries.stream().filter(c -> c.getId().equals(countryId)).findFirst()
                     .flatMap(c -> {
-                        List<FileName> files = c.getFiles();
+                        Set<FileName> files = c.getFiles();
                         if (files == null) {
-                            files = new ArrayList<>();
+                            files = new HashSet<>();
                         }
                         files.add(new FileName(file));
                         c.setFiles(files);
