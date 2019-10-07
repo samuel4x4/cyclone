@@ -5,6 +5,7 @@ import com.ruby.cyclone.configserver.models.constants.FileFormat;
 import com.ruby.cyclone.configserver.repo.mongo.NamespaceRepository;
 import com.ruby.cyclone.configserver.repo.mongo.PropertiesRepository;
 import org.apache.commons.io.IOUtils;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -35,10 +36,10 @@ public class FileService {
     public List<String> getFiles(String namespaceId, String countryId) {
 
         Optional<Namespace> namespaceDao = this.namespaceRepository.findById(namespaceId);
-        return namespaceDao.map(ns -> ns.getCountries())
+        return namespaceDao.map(Namespace::getCountries)
                 .flatMap(countries -> countries.stream().filter(c -> c.equals(countryId)).findFirst())
                 .map(Country::getFiles)
-                .orElseThrow(() -> new RuntimeException())
+                .orElseThrow(RuntimeException::new)
                 .stream()
                 .map(FileName::getName).collect(Collectors.toList());
 
@@ -46,6 +47,28 @@ public class FileService {
 
     public String importProperties(String namespace, String country, FileFormat fileFormat, MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();
+
+        Optional<Namespace> optionalNamespace = namespaceRepository.findById(namespace);
+        Namespace namespaceFromDb = optionalNamespace.get();
+        List<Country> countries = namespaceFromDb.getCountries();
+
+        Country country1 = countries
+                .stream()
+                .filter(c -> c.getId().equals(country))
+                .findFirst().get();
+
+        @UniqueElements List<FileName> files = country1.getFiles();
+        if (files == null) {
+            files = new ArrayList<>();
+        }
+        boolean fileExists = !files.stream().anyMatch(f -> f.equals(file.getOriginalFilename()));
+        if (!fileExists) {
+            files.add(new FileName(file.getOriginalFilename()));
+            country1.setFiles(files);
+            namespaceFromDb.setCountries(countries);
+            namespaceRepository.save(namespaceFromDb);
+        }
+
 
         System.out.println(originalFilename);
         InputStream is = file.getInputStream();
