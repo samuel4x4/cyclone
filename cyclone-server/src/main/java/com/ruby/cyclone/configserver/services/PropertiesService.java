@@ -71,6 +71,9 @@ public class PropertiesService {
             return;
         }
         countries.forEach(country -> {
+            if (country == null || country.getId() == null) {
+                return;
+            }
             addPropertyForOneCountry(propertyRequest, ns, country);
         });
     }
