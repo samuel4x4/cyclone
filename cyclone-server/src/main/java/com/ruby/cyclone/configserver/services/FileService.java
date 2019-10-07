@@ -56,11 +56,11 @@ public class FileService {
             PropertyId id = PropertyId.builder().key(k.toString())
                     .namespace(namespace)
                     .country(country)
+                    .file(file.getOriginalFilename())
                     .build();
             Property property = new Property();
             property.setId(id);
             property.setValue(v);
-            property.setFile(file.getOriginalFilename());
             appProperties.add(property);
         });
         propertiesRepository.saveAll(appProperties);
@@ -70,7 +70,7 @@ public class FileService {
     }
 
     public List<Property> getPropertiesFromFile(String namespace, String country, String file) {
-        return null;
+        return propertiesRepository.getPropertiesFromFile(namespace, country, file);
     }
 
     public Resource exportFile(String namespace, String country, String filename) throws IOException {
@@ -99,7 +99,7 @@ public class FileService {
     }
 
     private Properties readPropertiesFromDb(String namespace, String country, String filename) {
-        List<Property> appProperties = propertiesRepository.searchByKeyAndLocation(namespace, country, filename, "");
+        List<Property> appProperties = propertiesRepository.getPropertiesFromFile(namespace, country, filename);
 
         Properties properties = new Properties();
         appProperties.forEach(p -> {

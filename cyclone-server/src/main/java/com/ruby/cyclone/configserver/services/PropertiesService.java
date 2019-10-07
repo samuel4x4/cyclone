@@ -28,7 +28,7 @@ public class PropertiesService {
 
 
     public Map<PropertyLocation, List<Property>> searchProperties(String namespace, String business, String keyWord) {
-        List<Property> properties = propertiesRepository.searchByKeyAndLocation(namespace, business, "", keyWord);
+        List<Property> properties = propertiesRepository.searchByKeyAndLocationRegexes(namespace, business, "", keyWord);
         return groupProperties(properties);
     }
 
@@ -79,12 +79,12 @@ public class PropertiesService {
         PropertyId pId = PropertyId.builder()
                 .namespace(ns.getName())
                 .country(country.getId())
+                .file(propertyRequest.getFile())
                 .key(propertyRequest.getKey())
                 .build();
         Property property = new Property();
         property.setId(pId);
         property.setValue(propertyRequest.getDefaultValue());
-        property.setFile(propertyRequest.getFile());
         if (propertiesRepository.existsById(pId)) {
             return;
         }

@@ -9,10 +9,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @EqualsAndHashCode
-@Document
+@Document(collection = "files")
 public class FileName {
     @Id
     String name;
-
 
 }

@@ -10,8 +10,15 @@ import java.util.List;
 public interface PropertiesRepository extends MongoRepository<Property, PropertyId> {
 
 
-    @Query("{'_id.namespace': ?0, '_id.country':?1, 'file':{'$regex' : ?2}, '_id.key':{'$regex' : ?3}}")
-    List<Property> searchByKeyAndLocation(String namespace, String country, String file,String key);
+    @Query("{'_id.namespace': {'$regex' : ?0}, " +
+            "'_id.country':{'$regex' : ?1}, " +
+            "'_id.file':{'$regex' : ?2}, " +
+            "'_id.key':{'$regex' : ?3}}")
+    List<Property> searchByKeyAndLocationRegexes(String namespace, String country, String file, String key);
+
+
+    @Query("{'_id.namespace': ?0, '_id.country': ?1, '_id.file': ?2 }")
+    List<Property> getPropertiesFromFile(String namespace, String country, String file);
 
 
 }

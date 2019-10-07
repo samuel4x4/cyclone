@@ -50,7 +50,7 @@ public class CountryService {
             if (countries == null) {
                 countries = new ArrayList<>();
             }
-            countries.add(new Country(country, new ArrayList<FileName>()));
+            countries.add(new Country(country, "no description", new ArrayList<FileName>()));
             nsDao.setCountries(countries);
             namespaceRepository.save(nsDao);
             return country;
