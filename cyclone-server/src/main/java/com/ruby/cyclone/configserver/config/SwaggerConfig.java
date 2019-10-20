@@ -1,5 +1,7 @@
 package com.ruby.cyclone.configserver.config;
 
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -11,8 +13,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 /**
  * http://host:port/swagger-ui.html
  */
-@Configuration
 @EnableSwagger2
+@SpringBootApplication
 public class SwaggerConfig {
 
     @Bean

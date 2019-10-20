@@ -12,48 +12,48 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("api/v1/tenants")
+//@RestController
+//@RequestMapping("api/v1/tenants")
 public class TenantsController {
 
-    @Autowired
-    private TenantRepository tenantRepository;
-
-    @Autowired
-    private TenantService tenantService;
-
-    @GetMapping
-    public List<Tenant> getTenants() {
-        return tenantRepository.findAll();
-    }
-
-    @GetMapping("/{tenantId}")
-    public Optional<Tenant> getTenant(@PathVariable("tenantId") String tenantId) {
-        return tenantRepository.findById(tenantId);
-    }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Tenant createTenant(@Valid @RequestBody Tenant tenant) {
-        return tenantRepository.save(tenant);
-    }
-
-    @PutMapping("/{tenantId}/namespaces/{namespaceId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addTenantNamespace(@PathVariable("tenantId") String tenantId, @PathVariable("namespaceId") String namespaceId) {
-        tenantService.addTenantNamespace(tenantId, namespaceId);
-    }
-
-    @PutMapping("/{tenantId}")
-    public Tenant updateTenant(@PathVariable("tenantId") String tenantId, @Valid @RequestBody Tenant tenant) {
-        tenant.setId(tenantId);
-        return tenantRepository.save(tenant);
-    }
-
-    @DeleteMapping("/{tenantId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeTenant(@PathVariable("tenantId") String tenantId) {
-        tenantRepository.deleteById(tenantId);
-    }
+//    @Autowired
+//    private TenantRepository tenantRepository;
+//
+//    @Autowired
+//    private TenantService tenantService;
+//
+//    @GetMapping
+//    public List<Tenant> getTenants() {
+//        return tenantRepository.findAll();
+//    }
+//
+//    @GetMapping("/{tenantId}")
+//    public Optional<Tenant> getTenant(@PathVariable("tenantId") String tenantId) {
+//        return tenantRepository.findById(tenantId);
+//    }
+//
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public Tenant createTenant(@Valid @RequestBody Tenant tenant) {
+//        return tenantRepository.save(tenant);
+//    }
+//
+//    @PutMapping("/{tenantId}/namespaces/{namespaceId}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void addTenantNamespace(@PathVariable("tenantId") String tenantId, @PathVariable("namespaceId") String namespaceId) {
+//        tenantService.addTenantNamespace(tenantId, namespaceId);
+//    }
+//
+//    @PutMapping("/{tenantId}")
+//    public Tenant updateTenant(@PathVariable("tenantId") String tenantId, @Valid @RequestBody Tenant tenant) {
+//        tenant.setId(tenantId);
+//        return tenantRepository.save(tenant);
+//    }
+//
+//    @DeleteMapping("/{tenantId}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void removeTenant(@PathVariable("tenantId") String tenantId) {
+//        tenantRepository.deleteById(tenantId);
+//    }
 
 }

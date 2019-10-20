@@ -28,12 +28,12 @@ public class NamespaceService {
     }
 
     @Transactional
-    public String addNamespace(Namespace namespace) {
-        if (namespaceRepository.existsById(namespace.getName())) {
-            throw new RuntimeException("Namespace already exists");
-        }
+    public Namespace addNamespace(Namespace namespace) {
+//        if (namespaceRepository.existsById(namespace.getName())) {
+//            throw new RuntimeException("Namespace already exists");
+//        }
         namespace.setCountries(Collections.emptySet());
-        return namespaceRepository.save(namespace).getName();
+        return namespaceRepository.save(namespace);
     }
 
     @Transactional

@@ -43,6 +43,7 @@ public class TenantService {
         Tenant tenant = optionalTenant.get();
         Namespace namespace = optionalNamespace.get();
         namespace.setTenant(tenant);
+        namespaceRepository.save(namespace);
 
         List<Namespace> tenantNamespaces = tenant.getNamespaces();
 
@@ -53,6 +54,5 @@ public class TenantService {
         tenantNamespaces.add(namespace);
         tenant.setNamespaces(tenantNamespaces);
         tenantRepository.save(tenant);
-        namespaceRepository.save(namespace);
     }
 }
