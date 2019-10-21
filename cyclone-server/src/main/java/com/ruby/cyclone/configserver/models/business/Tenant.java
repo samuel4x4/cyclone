@@ -1,12 +1,7 @@
 package com.ruby.cyclone.configserver.models.business;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -22,8 +17,10 @@ import java.util.List;
 @Document(collection = "tenants")
 @Data
 @Builder
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"namespaces"})
+@ToString(exclude = {"namespaces"})
 @AllArgsConstructor
+@NoArgsConstructor
 public class Tenant {
 
     @Id
@@ -35,6 +32,7 @@ public class Tenant {
 
     private String description;
 
+    @JsonIgnore
     @DBRef
     private List<Namespace> namespaces = new ArrayList<>();
 

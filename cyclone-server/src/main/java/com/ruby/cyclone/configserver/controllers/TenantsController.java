@@ -15,11 +15,14 @@ import java.util.Optional;
 @RequestMapping("api/v1/tenants")
 public class TenantsController {
 
-    @Autowired
-    private TenantRepository tenantRepository;
+    private final TenantRepository tenantRepository;
+    private final TenantService tenantService;
 
     @Autowired
-    private TenantService tenantService;
+    public TenantsController(TenantRepository tenantRepository, TenantService tenantService) {
+        this.tenantRepository = tenantRepository;
+        this.tenantService = tenantService;
+    }
 
     @GetMapping
     public List<Tenant> getTenants() {
