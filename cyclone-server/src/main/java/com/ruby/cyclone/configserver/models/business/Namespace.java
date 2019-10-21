@@ -19,16 +19,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Document(collection = "namespaces")
-@CompoundIndex(def = "{'tenant':1, 'name':1}", unique = true, name = "tenant_name_idx")
+@CompoundIndex(def = "{'tenant':1, '_id':1}", unique = true, name = "tenant_name_idx")
 @Data
 @Builder
 @AllArgsConstructor
 public class Namespace {
 
     @Id
-    private String id;
-
-    @NotBlank
     private String name;
 
     @DBRef
