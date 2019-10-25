@@ -8,7 +8,7 @@
     <artifactId>cyclone</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>cyclone-ui</module>
+        <!--<module>cyclone-ui</module>-->
         <module>cyclone-server</module>
     </modules>
     <packaging>pom</packaging>
